@@ -1,21 +1,17 @@
+cat > app.py << 'EOF'
 import streamlit as st
 import ollama
-import os  
+import os
 
-# タイトル設定
 st.title("👨‍🏫 手塚先生Chat")
 
-# --- 変更点ここから ---
-# 環境変数 OLLAMA_HOST があればそれを使い、なければローカルを使う
+# 環境変数 OLLAMA_HOST の設定
 ollama_host = os.getenv("OLLAMA_HOST", None)
 
 if ollama_host:
-    # クラウドから自宅のPCに接続する場合
     client = ollama.Client(host=ollama_host)
 else:
-    # 通常のローカル接続
     client = ollama
-# --- 変更点ここまで ---
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
@@ -33,7 +29,6 @@ if prompt := st.chat_input("メッセージを入力..."):
         response_container = st.empty()
         full_response = ""
         
-        # client.chat を使うように変更
         stream = client.chat(
             model="gemma3", 
             messages=st.session_state["messages"],
@@ -48,3 +43,4 @@ if prompt := st.chat_input("メッセージを入力..."):
         response_container.markdown(full_response)
     
     st.session_state["messages"].append({"role": "assistant", "content": full_response})
+EOF
