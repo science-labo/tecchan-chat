@@ -1,8 +1,9 @@
 import streamlit as st
 import ollama
+import os  
 
-st.title("👨‍🏫手塚先生 Chat")
-
+# タイトル設定
+st.title("👨‍🏫 手塚先生Chat")
 
 # --- 変更点ここから ---
 # 環境変数 OLLAMA_HOST があればそれを使い、なければローカルを使う
